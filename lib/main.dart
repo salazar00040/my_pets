@@ -1,8 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:my_pets/presentations/features/user_register/login_page.dart';
+import 'package:my_pets/auth_services/authentication_service.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(MyApp());
+import 'auth_services/auth_check.dart';
+
+void main() async {
+  await Firebase.initializeApp();
+
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => AuthenticationService()),
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -13,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(),
+      home: AuthCheck(),
     );
   }
 }
